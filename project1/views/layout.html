@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" type="text/css" href="/css/style.css" />
+    {% if addStyles %} {% for style in addStyles %}
+    <link rel="stylesheet" type="text/css" href="{{ style }}" />
+    {% endfor %} {% endif %} {% block style %} {% endblock %}
+
+    <script src="/js/common.js"></script>
+    {% if addScripts %} {% for script in addScripts %}
+    <script src="{{ script }}"></script>
+    {% endfor %} {% endif %} {% block script %} {% endblock %}
+  </head>
+
+  <body>
+    {% block header %} {% include 'outline/header/main.html' %} {% endblock %}
+    {% block content %} {% endblock %} {% block footer %} {% include
+    'outline/footer/main.html' %} {% endblock %}
+  </body>
+</html>
