@@ -11,6 +11,9 @@ const { sequelize } = require("./models");
 
 dotenv.config();
 
+// 라우터
+const memberRouter = require("./routes/member");
+
 app.set("port", process.env.PORT || 3333);
 
 app.set("view engine", "html");
@@ -49,6 +52,9 @@ app.use(
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false })); //post 사용
+
+// 라우터 등록
+app.use("/member", memberRouter);
 
 app.use((req, res, next) => {
   const error = new Error(
