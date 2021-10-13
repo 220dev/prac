@@ -4,6 +4,7 @@ const path = require("path");
 const member = require("../../models/member");
 const message = require("../../commonLib/message");
 const { joinFormValidator } = require("../../middlewares/validators/join");
+const { loginFormValidator } = require("../../middlewares/validators/login");
 const router = express.Router();
 
 const upload = multer({
@@ -52,6 +53,31 @@ router
     } catch (err) {
       console.error(err);
       next(err); //에러처리 미들웨어로 이동
+    }
+  });
+
+router
+  .route("/login")
+  /** 로그인 양식 출력 */
+  .get((req, res, next) => {
+    res.render("member/login", {
+      pageTitle: "로그인<img src=/images/timer.png>",
+    });
+  })
+  /** 로그인 처리 */
+  .post(loginFormValidator, async (req, res, next) => {
+    try {
+      const result = await member.login(req.body.memId, req.body.memPw, req);
+      if (result) {
+        // 로그인 성공
+        return res.send("<script>location.href='/';</script>");
+      } else {
+        // 로그인 실패
+        throw new Error("로그인 실패!");
+      }
+    } catch (err) {
+      // 로그인 실패
+      return message.alertBack(err.message, res);
     }
   });
 
