@@ -11,7 +11,7 @@ module.exports = () => {
       res.locals.isLogin = req.isLogin = true;
       if (req.session.member.profile) {
         req.session.member.profileUrl =
-          "/profiles" + req.session.member.ptofile;
+          "/profiles" + req.session.member.profile;
       }
       req.member = res.locals.member = req.session.member;
     } else {
